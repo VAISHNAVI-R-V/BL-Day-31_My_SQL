@@ -1,0 +1,306 @@
+UC-1-->
+
+
+mysql> create database address_book_service;
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    13
+Current database: *** NONE ***
+
+Query OK, 1 row affected (0.35 sec)
+
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| address_book_service |
+| information_schema   |
+| mysql                |
+| payroll_service      |
+| performance_schema   |
+| sys                  |
+| vaishdb              |
++----------------------+
+7 rows in set (0.01 sec)
+
+
+UC-2-->
+
+
+mysql> use address_book_service;
+Database changed
+mysql> create table address_book(
+    ->  SNo int unsigned not null auto_increment,
+    -> First_Name varchar(150) not null,
+    -> Last_Name varchar(150) not null,
+    -> Address   varchar(100) not null,
+    -> City varchar(50) not null,
+    -> State varchar(50) not null,
+    -> Zip int(6) not null,
+    -> Phone_Number bigint not null,
+    -> primary key (SNo));
+Query OK, 0 rows affected, 1 warning (3.40 sec)
+
+mysql> describe address_book;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| SNo          | int unsigned | NO   | PRI | NULL    | auto_increment |
+| First_Name   | varchar(150) | NO   |     | NULL    |                |
+| Last_Name    | varchar(150) | NO   |     | NULL    |                |
+| Address      | varchar(100) | NO   |     | NULL    |                |
+| City         | varchar(50)  | NO   |     | NULL    |                |
+| State        | varchar(50)  | NO   |     | NULL    |                |
+| Zip          | int          | NO   |     | NULL    |                |
+| Phone_Number | bigint       | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.06 sec)
+
+
+
+U-3-->
+
+
+mysql> insert into address_book
+    -> (First_Name,Last_Name,Address,City,State,Zip,Phone_Number,Email) values
+    -> ("Vaishnavi", "Vishwakrma","PlotNo-45","Bidar","Karnataka",585401,8123746670,"vaishucv4@gmail.com"),
+    -> ("Shridhar","Kulkarni","6-8-9","Banglore","Karnataka",538610,9530794500,"shri@gmail.com"),
+    -> ("Ashwini", "Panchal","H.no-15","Pune","Maharastra",440123,7756900000,"ashu@gmail.com");
+Query OK, 3 rows affected (0.27 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State      | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka  | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka  | 538610 |   9530794500 | shri@gmail.com      |
+|   3 | Ashwini    | Panchal    | H.no-15   | Pune     | Maharastra | 440123 |   7756900000 | ashu@gmail.com      |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+3 rows in set (0.00 sec)
+
+
+UC-4-->
+
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State      | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka  | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka  | 538610 |   9530794500 | shri@gmail.com      |
+|   3 | Ashwini    | Panchal    | H.no-15   | Pune     | Maharastra | 440123 |   7756900000 | ashu@gmail.com      |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> update address_book set Zip = 421669 where First_Name = "Shridhar";
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State      | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka  | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka  | 421669 |   9530794500 | shri@gmail.com      |
+|   3 | Ashwini    | Panchal    | H.no-15   | Pune     | Maharastra | 440123 |   7756900000 | ashu@gmail.com      |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+3 rows in set (0.03 sec)
+
+
+
+UC-5-->
+
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State      | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka  | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka  | 421669 |   9530794500 | shri@gmail.com      |
+|   3 | Ashwini    | Panchal    | H.no-15   | Pune     | Maharastra | 440123 |   7756900000 | ashu@gmail.com      |
++-----+------------+------------+-----------+----------+------------+--------+--------------+---------------------+
+3 rows in set (0.03 sec)
+
+mysql> delete from address_book where First_Name = "Ashwini";
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka | 421669 |   9530794500 | shri@gmail.com      |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+2 rows in set (0.00 sec)
+
+
+
+UC-6-->
+
+
+mysql> select * from address_book where City = "Bidar" or State = "Karnataka";
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka | 421669 |   9530794500 | shri@gmail.com      |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from address_book where City = "Bidar";
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City  | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+1 row in set (0.00 sec)
+
+
+UC-7-->
+
+
+mysql> select *,count(*) from address_book group by City;
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+----------+
+| SNo | First_Name | Last_Name  | Address   | City     | State     | Zip    | Phone_Number | Email               | count(*) |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+----------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |        1 |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka | 421669 |   9530794500 | shri@gmail.com      |        1 |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+----------+
+2 rows in set (0.03 sec)
+
+mysql> select *,count(*) from address_book group by State;
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+----------+
+| SNo | First_Name | Last_Name  | Address   | City  | State     | Zip    | Phone_Number | Email               | count(*) |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+----------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |        2 |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+----------+
+1 row in set (0.00 sec)
+
+
+
+UC-8-->
+
+
+mysql> select * from address_book where City = "Bidar" order by First_Name;
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City  | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
++-----+------------+------------+-----------+-------+-----------+--------+--------------+---------------------+
+1 row in set (0.10 sec)
+
+mysql> select * from address_book;
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka | 421669 |   9530794500 | shri@gmail.com      |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from address_book where State = "Karnataka" order by First_Name;
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+| SNo | First_Name | Last_Name  | Address   | City     | State     | Zip    | Phone_Number | Email               |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+|   2 | Shridhar   | Kulkarni   | 6-8-9     | Banglore | Karnataka | 421669 |   9530794500 | shri@gmail.com      |
+|   1 | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar    | Karnataka | 585401 |   8123746670 | vaishucv4@gmail.com |
++-----+------------+------------+-----------+----------+-----------+--------+--------------+---------------------+
+2 rows in set (0.00 sec)
+
+
+UC-9-->
+
+
+mysql> alter table address_book add Types varchar(50) after SNo;
+Query OK, 0 rows affected (3.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++-----+-------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+| SNo | Types | First_Name | Last_Name  | Address   | City      | State        | Zip    | Phone_Number | Email               |
++-----+-------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+|   1 | NULL  | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar     | Karnataka    | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | NULL  | Shridhar   | Kulkarni   | 6-8-9     | Banglore  | Karnataka    | 421669 |   9530794500 | shri@gmail.com      |
+|   4 | NULL  | Shruti     | Reddy      | H.no-25   | Hydrabad  | Telangana    | 623023 |    635690500 | shuti@gmail.com     |
+|   5 | NULL  | Akash      | Panchal    | H.no-12   | Pune      | Maharastra   | 440023 |    740690045 | akash@gmail.com     |
+|   6 | NULL  | Veeresh    | Patil      | H.no-26   | Kalaburgi | Karnataka    | 214023 |   9202340002 | veer@gmail.com      |
+|   7 | NULL  | Preksha    | Shetty     | H.no-35   | Chennai   | AndraPradesh | 146235 |     92445500 | shetty@gmail.com    |
++-----+-------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> update address_book set Types = "Family" where First_Name = "Vaishnavi";
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set Types = "Family" where First_Name = "Akash";
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set Types = "Friend" where First_Name = "Shruti";
+Query OK, 1 row affected (0.31 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set Types = "Friend" where First_Name = "Veeresh";
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set Types = "Friend" where First_Name = "Preksha";
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set Types = "Friend" where First_Name = "Shridhar";
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----+--------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+| SNo | Types  | First_Name | Last_Name  | Address   | City      | State        | Zip    | Phone_Number | Email               |
++-----+--------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+|   1 | Family | Vaishnavi  | Vishwakrma | PlotNo-45 | Bidar     | Karnataka    | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Friend | Shridhar   | Kulkarni   | 6-8-9     | Banglore  | Karnataka    | 421669 |   9530794500 | shri@gmail.com      |
+|   4 | Friend | Shruti     | Reddy      | H.no-25   | Hydrabad  | Telangana    | 623023 |    635690500 | shuti@gmail.com     |
+|   5 | Family | Akash      | Panchal    | H.no-12   | Pune      | Maharastra   | 440023 |    740690045 | akash@gmail.com     |
+|   6 | Friend | Veeresh    | Patil      | H.no-26   | Kalaburgi | Karnataka    | 214023 |   9202340002 | veer@gmail.com      |
+|   7 | Friend | Preksha    | Shetty     | H.no-35   | Chennai   | AndraPradesh | 146235 |     92445500 | shetty@gmail.com    |
++-----+--------+------------+------------+-----------+-----------+--------------+--------+--------------+---------------------+
+6 rows in set (0.00 sec)
+
+
+UC-10-->
+
+
+mysql> select Types,count(Types) from address_book group by Types;
++--------+--------------+
+| Types  | count(Types) |
++--------+--------------+
+| Family |            2 |
+| Friend |            4 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+
+UC-11-->
+
+
+mysql> insert into address_book
+    -> (Types,First_Name,Last_Name,Address,City,State,Zip,Phone_Number,Email) values
+    -> ("Family","Nitya", "Sutar","MG Road","Banglore","Karnataka",314575,964435500,"Nity@gmail.com"),
+    -> ("Friend","Tarun", "Singh","Adarsh nagar","Amritsar","Panjab",631543,765495464,"tarun@gmail.com");
+Query OK, 2 rows affected (0.20 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++-----+--------+------------+------------+--------------+-----------+--------------+--------+--------------+---------------------+
+| SNo | Types  | First_Name | Last_Name  | Address      | City      | State        | Zip    | Phone_Number | Email               |
++-----+--------+------------+------------+--------------+-----------+--------------+--------+--------------+---------------------+
+|   1 | Family | Vaishnavi  | Vishwakrma | PlotNo-45    | Bidar     | Karnataka    | 585401 |   8123746670 | vaishucv4@gmail.com |
+|   2 | Friend | Shridhar   | Kulkarni   | 6-8-9        | Banglore  | Karnataka    | 421669 |   9530794500 | shri@gmail.com      |
+|   4 | Friend | Shruti     | Reddy      | H.no-25      | Hydrabad  | Telangana    | 623023 |    635690500 | shuti@gmail.com     |
+|   5 | Family | Akash      | Panchal    | H.no-12      | Pune      | Maharastra   | 440023 |    740690045 | akash@gmail.com     |
+|   6 | Friend | Veeresh    | Patil      | H.no-26      | Kalaburgi | Karnataka    | 214023 |   9202340002 | veer@gmail.com      |
+|   7 | Friend | Preksha    | Shetty     | H.no-35      | Chennai   | AndraPradesh | 146235 |     92445500 | shetty@gmail.com    |
+|   8 | Family | Nitya      | Sutar      | MG Road      | Banglore  | Karnataka    | 314575 |    964435500 | Nity@gmail.com      |
+|   9 | Friend | Tarun      | Singh      | Adarsh nagar | Amritsar  | Panjab       | 631543 |    765495464 | tarun@gmail.com     |
++-----+--------+------------+------------+--------------+-----------+--------------+--------+--------------+---------------------+
+8 rows in set (0.03 sec)
